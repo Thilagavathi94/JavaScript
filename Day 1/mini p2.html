@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const quizQuestions = [
+    {
+        question: 'What is the capital of France?',
+        options: ['Berlin', 'Madrid', 'Paris', 'Rome'],
+        correctAnswer: 'Paris'
+    },
+    {
+        question: 'What is 2 + 2?',
+        options: ['3', '4', '5', '6'],
+        correctAnswer: '4'
+    }
+];
+let userAnswers = [];
+
+function validateAnswer(userAnswer, correctAnswer) {
+    return userAnswer === correctAnswer;
+}
+
+function displayResults() {
+    for (let i = 0; i < quizQuestions.length; i++) {
+        const question = quizQuestions[i];
+        const userAnswer = userAnswers[i];
+        const isCorrect = validateAnswer(userAnswer, question.correctAnswer);
+
+        console.log(`Question: ${question.question}`);
+        console.log(`Options: ${question.options.join(', ')}`);
+        console.log(`Your Answer: ${userAnswer}`);
+        console.log(`Correctness Status: ${isCorrect ? 'Correct' : 'Incorrect'}`);
+        console.log('-----------------------------------');
+    }
+}
+
+function takeQuiz() {
+    for (let i = 0; i < quizQuestions.length; i++) {
+        const question = quizQuestions[i];
+        const userAnswer = prompt(`${question.question}\nOptions: ${question.options.join(', ')}`);
+        userAnswers.push(userAnswer);
+    }
+    displayResults();
+}
+
+// Start the quiz
+takeQuiz();
+    </script>
+</body>
+</html>

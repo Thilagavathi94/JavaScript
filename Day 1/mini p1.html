@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        class Order {
+    constructor(restaurantName, orderNumber) {
+        this.restaurantName = restaurantName; // String
+        this.orderNumber = orderNumber; // Number
+        this.foodItems = []; // Array
+        this.totalPrice = 0; // Number
+        this.isDelivered = false; // Boolean
+    }
+
+    addFoodItem(itemName, itemPrice) {
+        this.foodItems.push({ name: itemName, price: itemPrice });
+        this.totalPrice += itemPrice;
+    }
+
+    removeFoodItem(itemName) {
+        const index = this.foodItems.findIndex(item => item.name === itemName);
+        if (index !== -1) {
+            this.totalPrice -= this.foodItems[index].price;
+            this.foodItems.splice(index, 1);
+        }
+    }
+
+    updateDeliveryStatus() {
+        this.isDelivered = true;
+    }
+
+    displayOrderSummary() {
+        console.log(`Restaurant Name: ${this.restaurantName}`);
+        console.log(`Order Number: ${this.orderNumber}`);
+        console.log(`Food Items:`);
+        this.foodItems.forEach(item => {
+            console.log(`- ${item.name}: ${item.price.toFixed(2)}`);
+        });
+        console.log(`Total Price: ${this.totalPrice.toFixed(2)}`);
+        console.log(`Delivery Status: ${this.isDelivered ? 'Delivered' : 'In Progress'}`);
+    }
+}
+
+// Example usage:
+const myOrder = new Order('Pasta Palace', 12345);
+myOrder.addFoodItem('Spaghetti', 12.99);
+myOrder.addFoodItem('Garlic Bread', 4.99);
+myOrder.displayOrderSummary();
+myOrder.updateDeliveryStatus();
+myOrder.displayOrderSummary();
+myOrder.removeFoodItem('Garlic Bread');
+myOrder.displayOrderSummary();
+    </script>
+</body>
+</html>
