@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+      let inventory = [];
+
+
+function addProduct(name, quantity) {
+    const product = { name: name, quantity: quantity };
+    inventory.push(product);
+    console.log(`Product added: ${name}, Quantity: ${quantity}`);
+    displayInventory(); // Display updated inventory after adding
+}
+
+
+function removeProduct(name) {
+    const index = inventory.findIndex(product => product.name === name);
+    if (index !== -1) {
+        inventory.splice(index, 1);
+        console.log(`Product removed: ${name}`);
+    } else {
+        console.log(`Product not found: ${name}`);
+    }
+    displayInventory(); // Display updated inventory after removal
+}
+
+
+function displayInventory() {
+    console.log('Updated Inventory:');
+    if (inventory.length === 0) {
+        console.log('No products in inventory.');
+    } else {
+        inventory.forEach(product => {
+            console.log(`Name: ${product.name}, Quantity: ${product.quantity}`);
+        });
+    }
+}
+
+
+addProduct('Apple', 10);
+addProduct('Banana', 5);
+removeProduct('Apple');
+removeProduct('Orange');
+displayInventory();
+    </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const book = {
+    title: "The Great Gatsby",
+    author: "F. Scott Fitzgerald"
+};
+
+
+const publisher = {
+    name: "Scribner",
+    year: 1925
+};
+
+
+const mergedBook = Object.assign({}, book, publisher);
+
+console.log(mergedBook);
+    </script>
+</body>
+</html>

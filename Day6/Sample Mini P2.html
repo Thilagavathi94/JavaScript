@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let students = [
+    { name: 'Thilaga', age: 20, marks: 85 },
+    { name: 'Hari', age: 21, marks: 90 },
+    { name: 'Arun', age: 22, marks: 78 }
+];
+
+
+function calculateAverage(students) {
+    let totalMarks = 0;
+    for (let student of students) {
+        totalMarks += student.marks;
+    }
+    return totalMarks / students.length;
+}
+
+
+function displayStudentRecords(students) {
+    console.log('Student Details:');
+    for (let student of students) {
+        console.log(`Name: ${student.name}, Age: ${student.age}, Marks: ${student.marks}`);
+    }
+    const averageMarks = calculateAverage(students);
+    console.log(`Class Average Marks: ${averageMarks.toFixed(2)}`);
+}
+
+
+displayStudentRecords(students);
+    </script>
+</body>
+</html>
