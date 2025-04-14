@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function SimpleInterest(principal, rate, time) {
+  
+    if (typeof principal !== 'number' || typeof rate !== 'number' || typeof time !== 'number') {
+        throw new Error('All parameters must be numbers.');
+    }
+  
+    let simpleInterest = (principal * rate * time) / 100;
+    return simpleInterest;
+}
+
+
+const principal = 1000; 
+const rate = 5;       
+const time = 3;       
+const interest = SimpleInterest(principal, rate, time);
+console.log(`The simple interest is: $${interest}`); // Output: The simple interest is: $150
+    </script>
+</body>
+</html>

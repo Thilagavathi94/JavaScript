@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function factorialRecursive(n) {
+    if (n < 0) {
+        return 'Factorial is not defined for negative numbers';
+    } else if (n === 0 || n === 1) {
+        return 1;
+    } else {
+        return n * factorialRecursive(n - 1);
+    }
+}
+console.log(factorialRecursive(5)); 
+
+    </script>
+</body>
+</html>

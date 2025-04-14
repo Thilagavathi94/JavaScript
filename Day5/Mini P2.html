@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+       let groceryList = '';
+
+
+function addItem(item) {
+    if (item) {
+        
+        groceryList += item + '\n';
+        console.log(`Added: ${item}`);
+    } else {
+        console.log('Please provide an item name.');
+    }
+}
+
+
+function viewItems() {
+    if (groceryList) {
+        console.log('Current Grocery List:\n' + groceryList);
+    } else {
+        console.log('The grocery list is empty.');
+    }
+}
+
+
+function removeItem(item) {
+    if (groceryList.includes(item)) {
+      
+        let items = groceryList.split('\n');
+        items = items.filter(i => i !== item);
+       
+        groceryList = items.join('\n');
+        console.log(`Removed: ${item}`);
+    } else {
+        console.log(`Item not found: ${item}`);
+    }
+}
+
+
+addItem('Milk');
+addItem('Eggs');
+viewItems();
+removeItem('Milk');
+viewItems();
+    </script>
+</body>
+</html>
