@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function Car(make, model, year) {
+    this.make = make;
+    this.model = model;
+    this.year = year;
+}
+
+Car.prototype.calculateAge = function() {
+    const currentYear = new Date().getFullYear();
+    return currentYear - this.year;
+};
+
+const myCar = new Car('Toyota', 'Corolla', 2015);
+console.log(`The age of my car is ${myCar.calculateAge()} years.`);
+    </script>
+</body>
+</html>

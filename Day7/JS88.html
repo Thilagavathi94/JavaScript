@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function Book(title, author, price) {
+    this.title = title;
+    this.author = author;
+    this.price = price;
+}
+
+const books = [
+    new Book('The Great Gatsby', 'F. Scott Fitzgerald', 10.99),
+    new Book('1984', 'George Orwell', 8.99),
+    new Book('To Kill a Mockingbird', 'Harper Lee', 12.99),
+    new Book('The Catcher in the Rye', 'J.D. Salinger', 9.99)
+];
+
+function filterBooksByPrice(booksArray, maxPrice) {
+    return booksArray.filter(book => book.price <= maxPrice);
+}
+
+const affordableBooks = filterBooksByPrice(books, 10);
+console.log(affordableBooks);
+    </script>
+</body>
+</html>

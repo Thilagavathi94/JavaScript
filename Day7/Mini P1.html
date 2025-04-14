@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function Employee(name, position, salary) {
+    this.name = name;
+    this.position = position;
+    this.salary = salary;
+}
+
+Employee.prototype.increaseSalary = function(amount) {
+    this.salary += amount;
+};
+
+let employees = [];
+
+function addEmployee(name, position, salary) {
+    const newEmployee = new Employee(name, position, salary);
+    employees.push(newEmployee);
+}
+
+function displayEmployees() {
+    console.log("Name\tPosition\tSalary");
+    console.log("------------------------");
+    employees.forEach(emp => {
+        console.log(`${emp.name}\t${emp.position}\t${emp.salary}`);
+    });
+}
+addEmployee('Thilaga', 'Software Engineer', 60000);
+addEmployee('Hari', 'Project Manager', 80000);
+displayEmployees();
+
+employees[0].increaseSalary(5000); 
+console.log('\nAfter Salary Increase:');
+displayEmployees();
+    </script>
+</body>
+</html>

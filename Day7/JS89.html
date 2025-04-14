@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function Employee(name, position) {
+    this.name = name;
+    this.position = position;
+}
+
+Employee.prototype.getDetails = function() {
+    return `${this.name} is a ${this.position}`;
+};
+function Manager(name, position, department) {
+  
+    Employee.call(this, name, position);
+    this.department = department;
+}
+
+Manager.prototype = Object.create(Employee.prototype);
+Manager.prototype.constructor = Manager;
+
+
+Manager.prototype.getDepartment = function() {
+    return `${this.name} manages the ${this.department} department.`;
+};
+
+
+const emp1 = new Employee('Thilaga', 'Developer');
+console.log(emp1.getDetails()); 
+
+const mgr1 = new Manager('Hari', 'Manager', 'IT');
+console.log(mgr1.getDetails());
+console.log(mgr1.getDepartment()); 
+
+
+    </script>
+</body>
+</html>

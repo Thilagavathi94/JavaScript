@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function Product(name, price) {
+    this.name = name;
+    this.price = price;
+}
+
+
+function ShoppingCart() {
+    this.products = [];
+}
+
+
+ShoppingCart.prototype.addProduct = function(product) {
+    this.products.push(product);
+};
+
+ShoppingCart.prototype.removeProduct = function(productName) {
+    this.products = this.products.filter(function(product) {
+        return product.name !== productName;
+    });
+};
+
+ShoppingCart.prototype.calculateTotalPrice = function() {
+    return this.products.reduce(function(total, product) {
+        return total + product.price;
+    }, 0);
+};
+
+
+const cart = new ShoppingCart();
+const apple = new Product('Apple', 1.00);
+const banana = new Product('Banana', 0.50);
+cart.addProduct(apple);
+cart.addProduct(banana);
+console.log('Total Price:', cart.calculateTotalPrice()); 
+cart.removeProduct('Apple');
+console.log('Total Price after removing Apple:', cart.calculateTotalPrice()); 
+
+    </script>
+</body>
+</html>
