@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function generateUsername(firstName, lastName) {
+    
+    if (!firstName || !lastName) {
+        return 'Please enter both first and last names.';
+    }
+
+    
+    const firstPart = firstName.substring(0, 3);
+    const lastPart = lastName.substring(0, 3);
+
+    
+    const randomNumber = Math.floor(Math.random() * (999 - 100 + 1)) + 100;
+
+   
+    const username = `${firstPart}${lastPart}${randomNumber}`;
+
+   
+    return username;
+}
+
+const firstName = 'Thilaga';
+const lastName = 'Arun';
+const generatedUsername = generateUsername(firstName, lastName);
+console.log('Generated Username:', generatedUsername);
+    </script>
+</body>
+</html>
