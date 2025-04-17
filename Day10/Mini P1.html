@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+        button { padding: 10px 20px; font-size: 16px; }
+        h1 { font-size: 24px; }
+    </style>
+</head>
+<body>
+    <h1>Click Counter</h1>
+    <p>Button clicked: <span id="counter">0</span> times</p>
+    <button id="clickButton">Click Me!</button>
+    <button id="resetButton">Reset</button>
+
+    <script>
+        let count = 0;
+
+
+function updateCounter() {
+    document.getElementById('counter').innerText = count;
+}
+
+
+document.getElementById('clickButton').addEventListener('click', () => {
+    count++;
+    updateCounter();
+});
+
+
+document.getElementById('resetButton').addEventListener('click', () => {
+    count = 0;
+    updateCounter();
+});
+    </script>
+</body>
+</html>

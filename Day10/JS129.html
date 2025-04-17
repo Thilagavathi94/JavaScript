@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="playButton">Play Sound</button>
+    <audio id="sound" src="img/parrots-88486.mp3"></audio>
+</body>
+<script>
+     document.getElementById('playButton').addEventListener('click', function() {
+            var audio = document.getElementById('sound');
+            audio.play();
+        });
+</script>
+</html>

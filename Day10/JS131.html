@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Image Change on Button Click</h2>
+    <img id="myImage" src="img/1.webp" alt="Image 1" style="width:300px;height:200px;">
+    <br>
+    <button id="changeImageBtn">Change Image</button>
+
+    <script>
+         
+          function changeImage() {
+            const image = document.getElementById('myImage');
+            image.src = 'img/2.webp'; 
+        }
+
+       
+        document.getElementById('changeImageBtn').addEventListener('click', changeImage);
+    </script>
+</body>
+</html>
