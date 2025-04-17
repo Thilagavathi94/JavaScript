@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p id="myParagraph">This is a paragraph of text.</p>
+    <button onclick="decreaseFontSize()">Decrease Font Size</button>
+    <button onclick="increaseFontSize()">Increase Font Size</button>
+<script>
+    let fontSize = 16;
+
+function increaseFontSize() {
+    fontSize += 2;
+    changeFontSize(fontSize);
+}
+
+function decreaseFontSize() {
+    fontSize -= 2;
+    if (fontSize < 8) fontSize = 8; // minimum font size
+    changeFontSize(fontSize);
+}
+
+function changeFontSize(size) {
+    const paragraph = document.getElementById('myParagraph');
+    paragraph.style.fontSize = size + 'px';
+}
+
+</script>    
+</body>
+</html>

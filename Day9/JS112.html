@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>This is the first paragraph.</p>
+    <p>This is the second paragraph.</p>
+    <p>This is the third paragraph.</p>
+
+    <button onclick="changeTextColor('red')">Red</button>
+    <button onclick="changeTextColor('blue')">Blue</button>
+    <button onclick="changeTextColor('green')">Green</button>
+
+    
+
+
+<script>
+   
+   function changeTextColor(color) {
+    const paragraphs = document.querySelectorAll('p');
+    paragraphs.forEach(paragraph => {
+        paragraph.style.color = color;
+    });
+}
+
+
+
+</script>
+</body>
+</html>

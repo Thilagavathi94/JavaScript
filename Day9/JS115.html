@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p id="text">This is the first text.</p>
+    <button onclick="toggleText()">Toggle Text</button>
+<script>
+    let isShowingFirstText = true;
+
+function toggleText() {
+    const textElement = document.getElementById('text');
+    if (isShowingFirstText) {
+        textElement.textContent = 'This is the second text.';
+        isShowingFirstText = false;
+    } else {
+        textElement.textContent = 'This is the first text.';
+        isShowingFirstText = true;
+    }
+}
+
+</script> 
+</body>
+</html>

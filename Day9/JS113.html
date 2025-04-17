@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <img id="myImage" src="img/download.jpeg" alt="An image">
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+    const style = document.createElement('style');
+    style.textContent = `
+        #myImage:hover {
+            border: 2px solid black;
+        }
+    `;
+    document.head.appendChild(style);
+});
+
+    </script>
+</body>
+</html>
