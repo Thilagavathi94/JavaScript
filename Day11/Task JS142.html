@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Survey Form</h1>
+    <form id="surveyForm">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name"><br><br>
+        <label for="age">Age:</label><br>
+        <input type="number" id="age" name="age"><br><br>
+        <label for="feedback">Feedback:</label><br>
+        <textarea id="feedback" name="feedback"></textarea><br><br>
+        <button type="submit">Submit</button>
+    </form>
+    <script>
+        function saveDataToSessionStorage(event) {
+            event.preventDefault(); 
+            const name = document.getElementById('name').value;
+            const age = document.getElementById('age').value;
+            const feedback = document.getElementById('feedback').value;
+
+            // Save data to SessionStorage
+            sessionStorage.setItem('name', name);
+            sessionStorage.setItem('age', age);
+            sessionStorage.setItem('feedback', feedback);
+
+            alert('Survey responses saved!');
+        }
+
+        
+        document.getElementById('surveyForm').addEventListener('submit', saveDataToSessionStorage);
+    </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const person = {
+    name: "Thilaga",
+    age: 30,
+    city: "CBE"
+};
+
+const jsonString = JSON.stringify(person);
+
+
+localStorage.setItem('personData', jsonString);
+
+
+const retrievedData = localStorage.getItem('personData');
+console.log(retrievedData);
+    </script>
+</body>
+</html>

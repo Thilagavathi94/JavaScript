@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    
+function saveLastVisitedPage() {
+  
+    const currentPage = window.location.href;
+   
+    localStorage.setItem('lastVisited', currentPage);
+}
+
+
+function displayLastVisitedPage() {
+    
+    const lastVisited = localStorage.getItem('lastVisited');
+   
+    if (lastVisited) {
+        
+        document.getElementById('last-visited').innerText = `Last visited page: ${lastVisited}`;
+    }
+}
+window.addEventListener('beforeunload', saveLastVisitedPage);
+
+window.addEventListener('load', displayLastVisitedPage);
+    </script>
+</body>
+</html>

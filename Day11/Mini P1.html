@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Stopwatch</h1>
+    <div id="display">00:00:00</div>
+    <button id="start">Start</button>
+    <button id="stop">Stop</button>
+    <button id="reset">Reset</button>
+    <script>
+        let timer;
+let elapsedTime = 0;
+let isRunning = false;
+
+
+if (sessionStorage.getItem('elapsedTime')) {
+    elapsedTime = parseInt(sessionStorage.getItem('elapsedTime'));
+}
+
+function formatTime(ms) {
+    const totalSeconds = Math.floor(ms / 1000);
+    const hours = String(Math.floor(totalSeconds / 3600)).padStart(2, '0');
+    const minutes = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, '0');
+    const seconds = String(totalSeconds % 60).padStart(2, '0');
+    return `${hours}:${minutes}:${seconds}`;
+}
+
+function updateDisplay() {
+    document.getElementById('display').innerText = formatTime(elapsedTime);
+}
+
+function startTimer() {
+    if (!isRunning) {
+        isRunning = true;
+        timer = setInterval(() => {
+            elapsedTime += 1000;
+            sessionStorage.setItem('elapsedTime', elapsedTime);
+            updateDisplay();
+        }, 1000);
+    }
+}
+
+function stopTimer() {
+    isRunning = false;
+    clearInterval(timer);
+b} 
+sessionStorage.removeItem('elapsedTime');
+document.getElementById('display').innerText = formatTime(0);
+elapsedTime = 0; 
+sessionStorage.setItem('elapsedTime', elapsedTime); 
+document.getElementById('display').innerText = formatTime(elapsedTime); 
+document.getElementById('start').addEventListener('click', startTimer); 
+document.getElementById('stop').addEventListener('click', stopTimer); 
+document.getElementById('reset').addEventListener('click', resetTimer); 
+document.addEventListener('DOMContentLoaded', updateDisplay); 
+sessionStorage.setItem('elapsedTime', elapsedTime); 
+document.getElementById('display').innerText = formatTime(elapsedTime); 
+document.addEventListener('DOMContentLoaded', updateDisplay); 
+    </script>
+</body>
+</html>

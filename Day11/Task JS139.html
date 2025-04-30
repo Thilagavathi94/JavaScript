@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        
+function saveToDoList(todoList) {
+   
+    const jsonString = JSON.stringify(todoList);
+   
+    localStorage.setItem('todoList', jsonString);
+}
+
+
+function getToDoList() {
+    
+    const jsonString = localStorage.getItem('todoList');
+
+    return jsonString ? JSON.parse(jsonString) : [];
+}
+
+
+const myToDoList = ['Buy groceries', 'Read a book', 'Walk the dog'];
+
+saveToDoList(myToDoList);
+
+const retrievedList = getToDoList();
+console.log(retrievedList); 
+    </script>
+</body>
+</html>

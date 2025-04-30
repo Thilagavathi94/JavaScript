@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="quiz-container"></div>
+    <button id="submit-btn">Submit</button>
+    <script>
+        const quizData = [
+    { question: "What is the capital of France?", options: ["Berlin", "Madrid", "Paris", "Lisbon"], answer: "Paris" },
+    { question: "What is 2 + 2?", options: ["3", "4", "5", "6"], answer: "4" }
+];
+
+
+function loadQuiz() {
+    const quizContainer = document.getElementById('quiz-container');
+    quizContainer.innerHTML = '';
+
+    quizData.forEach((item, index) => {
+        const questionElement = document.createElement('div');
+        questionElement.innerHTML = `<p>${item.question}</p>`;
+        item.options.forEach(option => {
+            const optionElement = document.createElement('input');
+            optionElement.type = 'radio';
+            optionElement.name = 'question' + index;
+            optionElement.value = option;
+            optionElement.checked = getSavedAnswer(index) === option;
+            questionElement.appendChild(optionElement);
+            questionElement.innerHTML += `<label>${option}</label><br>`;
+        });
+        quizContainer.appendChild(questionElement);
+    });
+}
+
+
+function saveAnswer(index, answer) {
+    const savedAnswers = JSON.parse(sessionStorage.getItem('quizAnswers')) || {};
+    savedAnswers[index] = answer;
+    sessionStorage.setItem('quizAnswers', JSON.stringify(savedAnswers));
+}
+
+
+function getSavedAnswer(index) {
+    const savedAnswers = JSON.parse(sessionStorage.getItem('quizAnswers')) || {};
+    return savedAnswers[index];
+}
+
+
+document.getElementById('submit-btn').addEventListener('click', () => {
+    quizData.forEach((item, index) => {
+        const selectedOption = document.querySelector(`input[name='question${index}']:checked`);
+        if (selectedOption) {
+            saveAnswer(index, selectedOption.value);
+        }
+    });
+  alert('Your answers have been saved!');
+});
+loadQuiz()
+    </script>
+</body>
+</html>

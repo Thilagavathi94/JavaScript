@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Click Counter</h1>
+    <button id="clickButton">Click me!</button>
+    <p>Count: <span id="countDisplay">0</span></p>
+    <script>
+            function updateCountDisplay(count) {
+            document.getElementById('countDisplay').textContent = count;
+        }
+
+        let clickCount = localStorage.getItem('clickCount') ? parseInt(localStorage.getItem('clickCount')) : 0;
+        updateCountDisplay(clickCount);
+
+        // Add event listener to the button
+        document.getElementById('clickButton').addEventListener('click', function() {
+            clickCount++;  // Increment the count
+            localStorage.setItem('clickCount', clickCount);  // Store the new count in LocalStorage
+            updateCountDisplay(clickCount);  // Update the display
+        });
+    </script>
+</body>
+</html>

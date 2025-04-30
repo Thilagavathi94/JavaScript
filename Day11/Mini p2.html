@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        #notes { margin-top: 20px; }
+        .note { margin: 10px 0; padding: 10px; border: 1px solid #ccc; }
+        .delete-btn { color: red; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Notes App</h1>
+    <textarea id="noteInput" rows="4" cols="50" placeholder="Write your note here..."></textarea><br/>
+    <button id="addNoteBtn">Add Note</button>
+    <div id="notes"></div>
+    <script>
+       const noteInput = document.getElementById('noteInput');
+        const addNoteBtn = document.getElementById('addNoteBtn');
+        const notesDiv = document.getElementById('notes');
+
+        
+        function loadNotes() {
+            const notes = JSON.parse(localStorage.getItem('notes')) || [];
+            notes.forEach(note => displayNote(note));
+        }
+
+       
+        function displayNote(note) {
+            const noteElement = document.createElement('div');
+            noteElement.className = 'note';
+            noteElement.innerHTML = `${note} <span class='delete-btn' onclick='deleteNote(this)'>Delete</span>`;
+            notesDiv.appendChild(noteElement);
+        }
+
+       
+        addNoteBtn.addEventListener('click', () => {
+            const noteText = noteInput.value;
+            if (noteText) {
+                displayNote(noteText);
+                saveNoteToLocalStorage(noteText);
+                noteInput.value = ''; // Clear input field
+            }
+        });
+
+       
+        function saveNoteToLocalStorage(note) {
+            const notes = JSON.parse(localStorage.getItem('notes')) || [];
+            notes.push(note);
+            localStorage.setItem('notes', JSON.stringify(notes));
+        }
+
+        window.deleteNote = function(element) {
+            const noteElement = element.parentNode;
+            const noteText = noteElement.firstChild.textContent.trim();
+            deleteFromLocalStorage(noteText);
+            notesDiv.removeChild(noteElement);
+        };
+
+        
+        function deleteFromLocalStorage(note) {
+            let notes = JSON.parse(localStorage.getItem('notes')) || [];
+            notes = notes.filter(n => n !== note);
+            localStorage.setItem('notes', JSON.stringify(notes));
+        }
+
+       
+        window.onload = loadNotes;
+    </script>
+</body>
+</html>

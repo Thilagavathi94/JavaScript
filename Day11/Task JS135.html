@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function loginUser(username) {
+   
+    const user = { name: username, loggedIn: true };
+   
+    sessionStorage.setItem('user', JSON.stringify(user));
+}
+
+function checkLoginStatus() {
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    if (user && user.loggedIn) {
+        console.log(`Welcome back, ${user.name}!`);
+        return true;
+    } else {
+        console.log('User is not logged in.');
+        return false;
+    }
+}
+
+function logoutUser() {
+    sessionStorage.removeItem('user');
+    console.log('User has been logged out.');
+}
+
+
+loginUser('JohnDoe');  
+checkLoginStatus();     
+
+logoutUser();    
+    </script>
+</body>
+</html>
