@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const users = [
+    { id: 1, name: 'Thilaga', age: 25 },
+    { id: 2, name: 'Hari', age: 30 },
+    { id: 3, name: 'Arun', age: 35 }
+];
+
+
+function updateUserAge(userId, newAge) {
+   
+    const userIndex = users.findIndex(user => user.id === userId);
+    
+    
+    if (userIndex !== -1) {
+        
+        users[userIndex].age = newAge;
+        console.log(`User with ID ${userId} updated successfully.`);
+    } else {
+        console.log(`User with ID ${userId} not found.`);
+    }
+}
+
+
+updateUserAge(2, 31);
+console.log(users);
+    </script>
+    
+</body>
+</html>

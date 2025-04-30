@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        class Library {
+    constructor() {
+        this.books = [];
+    }
+
+  
+    addBook(bookID, title, author, genre) {
+        const newBook = {
+            bookID,
+            title,
+            author,
+            genre,
+            availabilityStatus: true,
+            borrowerDetails: null
+        };
+        this.books.push(newBook);
+    }
+
+  
+    searchBooks(query) {
+        return this.books.filter(book => book.title.includes(query) || book.author.includes(query) || book.genre.includes(query));
+    }
+
+    
+    borrowBook(bookID, borrowerName) {
+        const book = this.books.find(b => b.bookID === bookID);
+        if (book && book.availabilityStatus) {
+            book.availabilityStatus = false;
+            book.borrowerDetails = { name: borrowerName };
+            return `${book.title} has been borrowed.`;
+        } else {
+            return 'Book not available.';
+        }
+    }
+
+    
+    returnBook(bookID) {
+        const book = this.books.find(b => b.bookID === bookID);
+        if (book && !book.availabilityStatus) {
+            book.availabilityStatus = true;
+            book.borrowerDetails = null;
+            return `${book.title} has been returned.`;
+        } else {
+            return 'This book was not borrowed.';
+        }
+    }
+
+   
+    listAvailableBooks() {
+        return this.books.filter(book => book.availabilityStatus);
+    }
+}
+someLibrary = new Library(); 
+someLibrary.addBook(1, '1984', 'George Orwell', 'Dystopian');
+someLibrary.addBook(2, 'To Kill a Mockingbird', 'Harper Lee', 'Fiction'); 
+console.log(someLibrary.listAvailableBooks());
+    </script>
+</body>
+</html>

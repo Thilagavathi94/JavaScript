@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const products = [
+    { id: 1, name: 'Laptop', price: 999 },
+    { id: 2, name: 'Smartphone', price: 599 },
+    { id: 3, name: 'Tablet', price: 399 }
+];
+
+
+function findProductByName(productName) {
+    return products.find(product => product.name.toLowerCase() === productName.toLowerCase());
+}
+
+
+const searchedProduct = findProductByName('smartphone');
+if (searchedProduct) {
+    console.log('Product found:', searchedProduct);
+} else {
+    console.log('Product not found.');
+}
+    </script>
+</body>
+</html>

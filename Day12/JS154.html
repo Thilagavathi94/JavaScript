@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const items = [
+    { id: 1, category: 'fruit', name: 'Apple' },
+    { id: 2, category: 'fruit', name: 'Banana' },
+    { id: 3, category: 'vegetable', name: 'Carrot' },
+    { id: 4, category: 'fruit', name: 'Orange' },
+    { id: 5, category: 'vegetable', name: 'Lettuce' }
+];
+
+const groupedByCategory = items.reduce((accumulator, item) => {
+   
+    if (!accumulator[item.category]) {
+       
+        accumulator[item.category] = [];
+    }
+    
+    accumulator[item.category].push(item);
+    return accumulator;
+}, {});
+console.log(groupedByCategory);
+
+    </script>
+</body>
+</html>

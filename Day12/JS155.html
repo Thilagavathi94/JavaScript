@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const items = [
+    { id: 1, name: 'Item 1' },
+    { id: 2, name: 'Item 2' },
+    { id: 3, name: 'Item 3' }
+];
+function removeItemById(array, id) {
+    return array.filter(item => item.id !== id);
+}
+
+
+const updatedItems = removeItemById(items, 2);
+
+console.log(updatedItems);
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Product List</h1>
+    <div id="product-list"></div>
+  
+    <script>
+        const apiUrl = 'https://fakestoreapi.com/products';
+
+
+async function fetchProducts() {
+  try {
+    const response = await fetch(apiUrl);
+    const products = await response.json();
+    return products;
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    return [];
+  }
+}
+
+
+function displayProducts(products) {
+  const productListElement = document.getElementById('product-list');
+  productListElement.innerHTML = '';
+  products.forEach((product) => {
+    const productHtml = `
+      <div>
+        <h2>${product.title}</h2>
+        <p>Price: $${product.price}</p>
+        <img src="${product.image}" alt="${product.title}">
+      </div>
+    `;
+    productListElement.insertAdjacentHTML('beforeend', productHtml);
+});
+}
+
+
+async function main() {
+  const products = await fetchProducts();
+  displayProducts(products);
+}
+
+main();
+
+
+    </script>
+</body>
+</html>

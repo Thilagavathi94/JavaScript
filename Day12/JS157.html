@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const products = [
+    { name: 'Product A', price: 30 },
+    { name: 'Product B', price: 50 },
+    { name: 'Product C', price: 20 },
+    { name: 'Product D', price: 70 }
+];
+
+
+const findHighestPricedProduct = (products) => {
+    return products.reduce((highest, product) => {
+        return (product.price > highest.price) ? product : highest;
+    });
+};
+const highestPricedProduct = findHighestPricedProduct(products);
+console.log('The highest-priced product is:', highestPricedProduct);
+    </script>
+</body>
+</html>

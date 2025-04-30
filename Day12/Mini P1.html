@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let inventory = [
+    { id: 1, name: "Laptop", category: "Electronics", quantity: 50, price: 999.99 },
+    { id: 2, name: "Smartphone", category: "Electronics", quantity: 100, price: 499.99 },
+    { id: 3, name: "Desk Chair", category: "Furniture", quantity: 30, price: 199.99 }
+];
+function checkStock(productIdentifier) {
+    const product = inventory.find(item => item.id === productIdentifier || item.name.toLowerCase() === productIdentifier.toLowerCase());
+    if (product) {
+        return `Product: ${product.name}, Quantity Available: ${product.quantity}`;
+    } else {
+        return "Product not found.";
+    }
+}
+function updateInventory(productId, quantityChange) {
+    const product = inventory.find(item => item.id === productId);
+    if (product) {
+        product.quantity += quantityChange;
+        return `Updated ${product.name}. New Quantity: ${product.quantity}`;
+    } else {
+        return "Product not found for update.";
+    }
+}
+function calculateTotalValue() {
+    return inventory.reduce((total, item) => total + (item.price * item.quantity), 0);
+}
+console.log(checkStock(1)); 
+updateInventory(2, -10); 
+console.log(`Total Inventory Value: $${calculateTotalValue().toFixed(2)}`); 
+    </script>
+</body>
+</html>

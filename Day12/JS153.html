@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const data = [
+    { id: 1, name: 'Thilaga', age: 25 },
+    { id: 2, name: 'Hair', age: 30 },
+    { id: 3, name: 'Arun', age: 35 }
+];
+function dynamicSearch(items, key, searchTerm) {
+    return items.filter(item => 
+        item[key] && item[key].toString().toLowerCase().includes(searchTerm.toLowerCase())
+    );
+}
+const searchResults = dynamicSearch(data, 'name', 'la'); 
+console.log(searchResults);
+    </script>
+</body>
+</html>
