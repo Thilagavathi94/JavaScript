@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const jsonArray = [
+    { "id": 1, "name": "Thilaga" },
+    { "id": 2, "name": "Hari" },
+    { "id": 3, "name": "Arun" }
+];
+
+
+function findObjectById(array, id) {
+    return array.find(item => item.id === id);
+}
+
+
+const result = findObjectById(jsonArray, 2);
+console.log(result); 
+    </script>
+</body>
+</html>

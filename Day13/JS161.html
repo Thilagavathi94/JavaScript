@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+          const users = [
+       { id: 1, name: 'Thilaga', age: 25 },
+       { id: 2, name: 'Hari', age: 30 },
+       { id: 3, name: 'Arun', age: 35 }
+   ];
+
+   const usersJSON = JSON.stringify(users);
+   localStorage.setItem('users', usersJSON);
+    </script>
+</body>
+</html>

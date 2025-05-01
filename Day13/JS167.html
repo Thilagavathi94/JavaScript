@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+ const fs = require('fs');
+
+function addObjectToJsonFile(filePath, newObject) {
+  try {
+    // Read the existing JSON data from the file
+    const jsonData = fs.readFileSync(filePath, 'utf-8');
+
+    // Parse the JSON data into a JavaScript object
+    const jsonObject = JSON.parse(jsonData);
+
+    // Check if the JSON data is an array, if not, make it an array
+    if (!Array.isArray(jsonObject)) {
+      console.warn('The JSON file does not contain an array. Creating a new array.');
+      jsonObject = [];
+    }
+
+    // Add the new object to the array
+    jsonObject.push(newObject);
+
+    // Convert the updated JavaScript object back to a JSON string
+    const updatedJsonData = JSON.stringify(jsonObject, null, 2);
+
+    // Write the updated JSON string back to the file
+    fs.writeFileSync(filePath, updatedJsonData);
+
+    console.log('Object added to JSON file successfully.');
+  } catch (error) {
+    console.error('Error adding object to JSON file:', error);
+  }
+}
+
+// Example usage:
+const filePath = 'data.json';
+const newObject = {
+  "id": 3,
+  "name": "Thilaga",
+  "age": 25
+};
+
+addObjectToJsonFile(filePath, newObject);
+
+    </script>
+</body>
+</html>

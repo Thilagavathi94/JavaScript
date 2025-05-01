@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Movie Search App</h1>
+    <input id="title" type="text" placeholder="Enter movie title">
+    <button id="search">Search</button>
+    <div id="movie"></div>
+  
+    <script>
+      const apiKey = 'YOUR_API_KEY_HERE';
+
+async function searchMovie() {
+  const title = document.getElementById('title').value;
+  const url = `http://www.omdbapi.com/?t=${title}&apikey=${apiKey}`;
+
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (data.Response === 'True') {
+      displayMovie(data);
+    } else {
+      document.getElementById('movie').innerHTML = 'Movie not found!';
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+function displayMovie(movie) {
+  const movieHtml = `
+    <h2>${movie.Title}</h2>
+    <p>Year: ${movie.Year}</p>
+    <p>Plot: ${movie.Plot}</p>
+    <img src="${movie.Poster}" alt="${movie.Title}">
+  `;
+  document.getElementById('movie').innerHTML = movieHtml;
+}
+
+document.getElementById('search').addEventListener('click', searchMovie);
+
+
+
+    </script>
+</body>
+</html>

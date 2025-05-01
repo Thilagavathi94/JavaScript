@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <select id="dropdown-list"></select>
+
+    <script>
+const data = [
+  { id: 1, name: 'Option 1' },
+  { id: 2, name: 'Option 2' },
+  { id: 3, name: 'Option 3' },
+];
+
+function displayData(data) {
+  const dropdownList = document.getElementById('dropdown-list');
+  data.forEach((option) => {
+    const optionHtml = `
+      <option value="${option.id}">${option.name}</option>
+    `;
+    dropdownList.insertAdjacentHTML('beforeend', optionHtml);
+  });
+}
+
+displayData(data);
+
+
+    </script>
+</body>
+</html>

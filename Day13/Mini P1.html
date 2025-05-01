@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+       
+        .product {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px;
+            width: 200px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <h1>E-Commerce Product Catalog</h1>
+    <div id="product-list"></div>
+    <div id="product-details"></div>
+    <input id="max-price" type="number" placeholder="Max Price">
+    <button id="filter-button">Filter</button>
+    <select id="sort-order">
+      <option value="asc">Price: Low to High</option>
+      <option value="desc">Price: High to Low</option>
+    </select>
+    <button id="sort-button">Sort</button>
+  
+    <script>
+       
+async function fetchProducts() {
+  try {
+    const response = await fetch('products.json');
+    const products = await response.json();
+    return products;
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    return [];
+  }
+}
+
+
+function displayProducts(products) {
+  const productListElement = document.getElementById('product-list');
+  productListElement.innerHTML = '';
+  products.forEach((product) => {
+    const productHtml = `
+      <div>
+        <h2>${product.name}</h2>
+        <p>Price: $${product.price}</p>
+        <p>Category: ${product.category}</p>
+        <button onclick="displayProductDetails(${product.id})">View Details</button>
+      </div>
+    `;
+    productListElement.insertAdjacentHTML('beforeend', productHtml);
+  });
+}
+
+
+function filterProductsByPrice(products, maxPrice) {
+    return products.filter((product) => product.price <= maxPrice);
+}
+
+
+function sortProductsByPrice(products, order) {
+  if (order === 'asc') {
+    return products.sort((a, b) => a.price - b.price);
+  } else if (order === 'desc') {
+    return products.sort((a, b) => b.price - a.price);
+  }
+  return products;
+}
+
+
+function displayProductDetails(productId) {
+  fetchProducts().then((products) => {
+    const product = products.find((product) => product.id === productId);
+    if (product) {
+      const productDetailsHtml = `
+        <h2>${product.name}</h2>
+        <p>Price: $${product.price}</p>
+        <p>Category: ${product.category}</p>
+      `;
+      document.getElementById('product-details').innerHTML = productDetailsHtml;
+    }
+  });
+}
+
+async function main() {
+  const products = await fetchProducts();
+  displayProducts(products);
+
+ 
+  document.getElementById('filter-button').addEventListener('click', () => {
+    const maxPrice = parseInt(document.getElementById('max-price').value);
+    const filteredProducts = filterProductsByPrice(products, maxPrice);
+    displayProducts(filteredProducts);
+  });
+
+ 
+  document.getElementById('sort-button').addEventListener('click', () => {
+    const order = document.getElementById('sort-order').value;
+    const sortedProducts = sortProductsByPrice(products, order);
+    displayProducts(sortedProducts);
+  });
+}
+
+main();
+
+    </script>
+</body>
+</html>

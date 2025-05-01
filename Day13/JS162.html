@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table {
+          border-collapse: collapse;
+          width: 100%;
+        }
+        th, td {
+          border: 1px solid #ddd;
+          padding: 8px;
+          text-align: left;
+        }
+      </style>
+    
+</head>
+<body>
+    <h1>Data Table</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Username</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody id="table-body"></tbody>
+    </table>
+  
+    <script>
+     
+const apiUrl = 'https://jsonplaceholder.typicode.com/users';
+
+
+async function fetchData() {
+  try {
+    const response = await fetch(apiUrl);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return [];
+  }
+}
+
+function displayData(data) {
+  const tableBody = document.getElementById('table-body');
+  tableBody.innerHTML = '';
+  data.forEach((item) => {
+    const rowHtml = `
+      <tr>
+        <td>${item.id}</td>
+        <td>${item.name}</td>
+        <td>${item.username}</td>
+        <td>${item.email}</td>
+      </tr>
+    `;
+    tableBody.insertAdjacentHTML('beforeend', rowHtml);
+  });
+}
+
+
+async function main() {
+  const data = await fetchData();
+  displayData(data);
+}
+
+main();
+
+    </script>
+</body>
+</html>
