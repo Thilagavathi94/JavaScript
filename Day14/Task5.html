@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>GitHub User Profile</h1>
+  <div id="user-profile"></div>
+
+      
+  
+    <script>
+      
+async function fetchUserProfile(username) {
+  try {
+    const response = await fetch(`https://api.github.com/users/${username}`);
+    const userProfile = await response.json();
+    return userProfile;
+  } catch (error) {
+    console.error('Error fetching user profile:', error);
+    return null;
+  }
+}
+
+async function displayUserProfile(username) {
+  const userProfile = await fetchUserProfile(username);
+  if (userProfile) {
+    const profileHtml = `
+      <h2>${userProfile.login}</h2>
+      <img src="${userProfile.avatar_url}" alt="Avatar">
+      <p>Followers: ${userProfile.followers}</p>
+      <p>Following: ${userProfile.following}</p>
+      <p>Public Repos: ${userProfile.public_repos}</p>
+      <a href="${userProfile.html_url}" target="_blank">View Profile</a>
+    `;
+    document.getElementById('user-profile').innerHTML = profileHtml;
+  } else {
+    document.getElementById('user-profile').innerHTML = 'User not found!';
+  }
+}
+
+
+displayUserProfile('octocat');
+
+    </script>
+</body>
+</html>

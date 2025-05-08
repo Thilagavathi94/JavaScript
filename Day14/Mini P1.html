@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Typing Speed Tester</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      background: #f0f0f0;
+      max-width: 700px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+    }
+    #quote {
+      background: #fff;
+      padding: 15px;
+      font-size: 18px;
+      border-left: 5px solid #007bff;
+      margin-bottom: 20px;
+    }
+    textarea {
+      width: 100%;
+      height: 100px;
+      font-size: 16px;
+      padding: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      margin-top: 15px;
+      font-size: 16px;
+    }
+    #result {
+      font-weight: bold;
+      font-size: 18px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Typing Speed Tester</h1>
+  <div id="quote">Loading quote...</div>
+  <textarea id="input" placeholder="Start typing here..." disabled></textarea>
+  <br>
+  <button id="restart">Restart</button>
+  <div id="result"></div>
+
+  <script>
+    const quoteEl = document.getElementById('quote');
+const inputEl = document.getElementById('input');
+const resultEl = document.getElementById('result');
+const restartBtn = document.getElementById('restart');
+
+let startTime, endTime, currentQuote = '';
+
+
+async function fetchQuote() {
+  try {
+    const res = await fetch('https://api.quotable.io/random');
+    const data = await res.json();
+    currentQuote = data.content;
+    quoteEl.textContent = currentQuote;
+    inputEl.value = '';
+    inputEl.disabled = false;
+    inputEl.focus();
+    resultEl.textContent = '';
+  } catch (err) {
+    quoteEl.textContent = 'Failed to load quote. Please try again.';
+    inputEl.disabled = true;
+  }
+}
+
+function startTimer() {
+  startTime = new Date();
+}
+
+function stopTimer() {
+  endTime = new Date();
+  const timeTaken = (endTime - startTime) / 1000; 
+  const wordCount = currentQuote.trim().split(/\s+/).length;
+  const wpm = Math.round((wordCount / timeTaken) * 60);
+  resultEl.textContent = `⏱️ Typing Speed: ${wpm} WPM`;
+}
+
+inputEl.addEventListener('input', () => {
+  const typed = inputEl.value;
+  if (typed.length === 1) {
+    startTimer();
+  }
+  if (typed === currentQuote) {
+    inputEl.disabled = true;
+    stopTimer();
+  }
+});
+
+restartBtn.addEventListener('click', () => {
+  fetchQuote();
+});
+
+
+fetchQuote();
+
+  </script>
+</body>
+</html>

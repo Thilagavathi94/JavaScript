@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Air Quality Checker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      background: #f0f8ff;
+      max-width: 600px;
+      margin: auto;
+    }
+    select, button {
+      padding: 10px;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+    .card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      margin-top: 0;
+    }
+    .good { color: green; }
+    .moderate { color: orange; }
+    .poor { color: red; }
+  </style>
+</head>
+<body>
+
+  <h1>🌍 Real-Time Air Quality Checker</h1>
+  
+  <label for="citySelect">Select a City:</label>
+  <select id="citySelect">
+    <option value="delhi">Delhi</option>
+    <option value="london">London</option>
+    <option value="newyork">New York</option>
+    <option value="tokyo">Tokyo</option>
+    <option value="sydney">Sydney</option>
+  </select>
+
+  <button onclick="getAQI()">Check AQI</button>
+
+  <div class="card" id="output"></div>
+
+  <script>
+    const output = document.getElementById('output');
+
+
+const API_KEY = 'YOUR_API_KEY';
+
+const cities = {
+  delhi: { lat: 28.6139, lon: 77.2090 },
+  london: { lat: 51.5074, lon: -0.1278 },
+  newyork: { lat: 40.7128, lon: -74.0060 },
+  tokyo: { lat: 35.6895, lon: 139.6917 },
+  sydney: { lat: -33.8688, lon: 151.2093 }
+};
+
+function getAQI() {
+  const city = document.getElementById('citySelect').value;
+  const { lat, lon } = cities[city];
+  const url = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
+
+  output.innerHTML = 'Loading...';
+
+  fetch(url)
+    .then(res => {
+      if (!res.ok) throw new Error('Network response error');
+      return res.json();
+    })
+    .then(data => {
+      const aqi = data.list[0].main.aqi;
+      const components = data.list[0].components;
+
+      const level = getAQIDescription(aqi);
+
+      output.innerHTML = `
+        <h2>${city.charAt(0).toUpperCase() + city.slice(1)}</h2>
+        <p><strong>AQI:</strong> <span class="${level.class}">${aqi} (${level.text})</span></p>
+        <p><strong>Pollutants:</strong></p>
+        <ul>
+          <li>PM2.5: ${components.pm2_5} µg/m³</li>
+          <li>PM10: ${components.pm10} µg/m³</li>
+          <li>NO₂: ${components.no2} µg/m³</li>
+          <li>O₃: ${components.o3} µg/m³</li>
+          <li>CO: ${components.co} µg/m³</li>
+        </ul>
+        <p><strong>Health Advice:</strong> ${level.advice}</p>
+      `;
+    })
+    .catch(err => {
+      output.innerHTML = `<p style="color:red;">Error: ${err.message}</p>`;
+    });
+}
+
+function getAQIDescription(aqi) {
+  switch (aqi) {
+    case 1: return { text: "Good", class: "good", advice: "Air quality is satisfactory." };
+    case 2: return { text: "Fair", class: "good", advice: "Air quality is acceptable." };
+    case 3: return { text: "Moderate", class: "moderate", advice: "Sensitive individuals should limit prolonged outdoor exertion." };
+    case 4: return { text: "Poor", class: "poor", advice: "Avoid outdoor activity if possible." };
+    case 5: return { text: "Very Poor", class: "poor", advice: "Stay indoors and avoid physical activity." };
+    default: return { text: "Unknown", class: "", advice: "No data available." };
+  }
+}
+
+  </script>
+</body>
+</html>

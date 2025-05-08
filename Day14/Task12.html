@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Search with Fetch API</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    input[type="text"] {
+      padding: 10px;
+      font-size: 16px;
+      width: 250px;
+    }
+    button {
+      padding: 10px;
+      font-size: 16px;
+    }
+    #results {
+      margin-top: 20px;
+    }
+    .result-item {
+      border-bottom: 1px solid #ccc;
+      padding: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Search Posts</h1>
+  <input type="text" id="searchInput" placeholder="Enter search term..." />
+  <button onclick="searchPosts()">Search</button>
+
+  <div id="results"></div>
+
+  <script>
+    function searchPosts() {
+  const query = document.getElementById('searchInput').value.trim().toLowerCase();
+  const resultsContainer = document.getElementById('results');
+  resultsContainer.innerHTML = 'Searching...';
+
+  fetch('https://jsonplaceholder.typicode.com/posts')
+    .then(response => {
+      if (!response.ok) throw new Error('Network error');
+      return response.json();
+    })
+    .then(data => {
+      const filtered = data.filter(post =>
+        post.title.toLowerCase().includes(query)
+      );
+
+      if (filtered.length === 0) {
+        resultsContainer.innerHTML = '<p>No results found.</p>';
+        return;
+      }
+
+      resultsContainer.innerHTML = '';
+      filtered.forEach(post => {
+        const div = document.createElement('div');
+        div.className = 'result-item';
+        div.innerHTML = `<h3>${post.title}</h3><p>${post.body}</p>`;
+        resultsContainer.appendChild(div);
+      });
+    })
+    .catch(error => {
+      resultsContainer.innerHTML = `<p style="color:red;">Error: ${error.message}</p>`;
+    });
+}
+
+  </script>
+</body>
+</html>

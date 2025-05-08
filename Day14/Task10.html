@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Load API Data on Click</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    button {
+      padding: 10px 15px;
+      font-size: 16px;
+    }
+    #output {
+      margin-top: 20px;
+    }
+    .item {
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+    }
+    .item h3 {
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>API Data Loader</h1>
+  <button id="loadBtn">Load Data</button>
+
+  <div id="output"></div>
+
+  <script>
+    document.getElementById('loadBtn').addEventListener('click', loadData);
+
+function loadData() {
+  fetch('https://jsonplaceholder.typicode.com/posts?_limit=5')
+    .then(response => response.json())
+    .then(data => {
+      displayData(data);
+    })
+    .catch(error => {
+      console.error('Error loading data:', error);
+    });
+}
+
+function displayData(posts) {
+  const output = document.getElementById('output');
+  output.innerHTML = ''; 
+
+  posts.forEach(post => {
+    const div = document.createElement('div');
+    div.className = 'item';
+    div.innerHTML = `<h3>${post.title}</h3><p>${post.body}</p>`;
+    output.appendChild(div);
+  });
+}
+
+  </script>
+</body>
+</html>

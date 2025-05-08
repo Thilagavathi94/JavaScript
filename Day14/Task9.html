@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Currency Exchange Rates</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    #rates {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 10px;
+    }
+    .rate {
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 6px;
+      background-color: #f9f9f9;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>Currency Exchange Rates (Base: USD)</h1>
+  <div id="rates"></div>
+
+  <script>
+  
+const API_URL = 'https://api.exchangerate-api.com/v4/latest/USD';
+
+async function fetchExchangeRates() {
+  try {
+    const response = await fetch(API_URL);
+    const data = await response.json();
+    displayRates(data.rates);
+  } catch (error) {
+    console.error('Failed to fetch exchange rates:', error);
+  }
+}
+
+function displayRates(rates) {
+  const ratesContainer = document.getElementById('rates');
+  ratesContainer.innerHTML = '';
+
+  // Display only a few for demo purposes
+  const currenciesToShow = ['EUR', 'GBP', 'JPY', 'AUD', 'CAD', 'INR'];
+
+  currenciesToShow.forEach(currency => {
+    const rateDiv = document.createElement('div');
+    rateDiv.className = 'rate';
+    rateDiv.textContent = `${currency}: ${rates[currency]}`;
+    ratesContainer.appendChild(rateDiv);
+  });
+}
+
+
+fetchExchangeRates();
+
+  </script>
+</body>
+</html>
