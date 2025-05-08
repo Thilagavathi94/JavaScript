@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Employee Attendance Management</title>
+  <style>
+    body { font-family: Arial; padding: 20px; max-width: 900px; margin: auto; }
+    input, select, button { padding: 8px; margin: 5px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+    .present { background-color: #d4edda; }
+    .absent { background-color: #f8d7da; }
+  </style>
+</head>
+<body>
+
+  <h2>Employee Attendance Management</h2>
+
+  <div>
+    <input type="text" id="empName" placeholder="Employee Name" />
+    <input type="text" id="empId" placeholder="Employee ID" />
+    <input type="text" id="empDept" placeholder="Department" />
+    <button onclick="addEmployee()">Add Employee</button>
+  </div>
+
+  <div>
+    <select id="filterDept" onchange="renderEmployees()">
+      <option value="all">All Departments</option>
+    </select>
+    <select id="filterStatus" onchange="renderEmployees()">
+      <option value="all">All Statuses</option>
+      <option value="present">Present</option>
+      <option value="absent">Absent</option>
+    </select>
+    <select id="sortBy" onchange="renderEmployees()">
+      <option value="name">Sort by Name</option>
+      <option value="attendance">Sort by Attendance Count</option>
+    </select>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th><th>ID</th><th>Department</th><th>Status</th><th>Count</th><th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="employeeTable"></tbody>
+  </table>
+
+  <script>
+    let employees = JSON.parse(localStorage.getItem('employees')) || [];
+
+function saveData() {
+  localStorage.setItem('employees', JSON.stringify(employees));
+}
+
+function updateDepartmentFilterOptions() {
+  const deptSelect = document.getElementById('filterDept');
+  const departments = [...new Set(employees.map(e => e.department))];
+  deptSelect.innerHTML = '<option value="all">All Departments</option>';
+  departments.forEach(dept => {
+    const option = document.createElement('option');
+    option.value = dept;
+    option.textContent = dept;
+    deptSelect.appendChild(option);
+  });
+}
+
+function addEmployee() {
+  const name = document.getElementById('empName').value.trim();
+  const id = document.getElementById('empId').value.trim();
+  const department = document.getElementById('empDept').value.trim();
+
+  if (!name || !id || !department) {
+    alert('Please fill all fields');
+    return;
+  }
+
+  const exists = employees.some(e => e.id === id);
+  if (exists) {
+    alert('Employee ID already exists.');
+    return;
+  }
+
+  employees.push({ name, id, department, status: 'absent', attendanceCount: 0 });
+  saveData();
+  updateDepartmentFilterOptions();
+  renderEmployees();
+}
+
+function markAttendance(index, status) {
+  const emp = employees[index];
+  if (emp.status !== status) {
+    emp.status = status;
+    if (status === 'present') emp.attendanceCount++;
+  }
+  saveData();
+  renderEmployees();
+}
+
+function renderEmployees() {
+  const table = document.getElementById('employeeTable');
+  const filterDept = document.getElementById('filterDept').value;
+  const filterStatus = document.getElementById('filterStatus').value;
+  const sortBy = document.getElementById('sortBy').value;
+
+  let filtered = employees.filter(emp => {
+    const deptMatch = filterDept === 'all' || emp.department === filterDept;
+    const statusMatch = filterStatus === 'all' || emp.status === filterStatus;
+    return deptMatch && statusMatch;
+  });
+
+  if (sortBy === 'name') {
+    filtered.sort((a, b) => a.name.localeCompare(b.name));
+  } else if (sortBy === 'attendance') {
+    filtered.sort((a, b) => b.attendanceCount - a.attendanceCount);
+  }
+
+  table.innerHTML = '';
+  filtered.forEach((emp, index) => {
+    const row = `<tr class="${emp.status}">
+      <td>${emp.name}</td>
+      <td>${emp.id}</td>
+      <td>${emp.department}</td>
+      <td>${emp.status}</td>
+      <td>${emp.attendanceCount}</td>
+      <td>
+        <button onclick="markAttendance(${index}, 'present')">✅ Present</button>
+        <button onclick="markAttendance(${index}, 'absent')">❌ Absent</button>
+      </td>
+    </tr>`;
+    table.insertAdjacentHTML('beforeend', row);
+  });
+}
+
+
+updateDepartmentFilterOptions();
+renderEmployees();
+
+  </script>
+</body>
+</html>

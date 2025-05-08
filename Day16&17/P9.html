@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Online Bookstore</title>
+  <style>
+    body { font-family: Arial; padding: 20px; max-width: 1000px; margin: auto; }
+    input, select, button { padding: 8px; margin: 5px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+  </style>
+</head>
+<body>
+
+  <h2>Online Bookstore Management</h2>
+
+  <div>
+    <input type="text" id="title" placeholder="Title" />
+    <input type="text" id="author" placeholder="Author" />
+    <input type="number" id="price" placeholder="Price" />
+    <select id="category">
+      <option value="Fiction">Fiction</option>
+      <option value="Non-fiction">Non-fiction</option>
+      <option value="Comics">Comics</option>
+      <option value="Education">Education</option>
+    </select>
+    <button onclick="addBook()">Add Book</button>
+  </div>
+
+  <div>
+    <input type="text" id="search" placeholder="Search by Title or Author" oninput="renderBooks()" />
+    <select id="filterCategory" onchange="renderBooks()">
+      <option value="all">All Categories</option>
+      <option value="Fiction">Fiction</option>
+      <option value="Non-fiction">Non-fiction</option>
+      <option value="Comics">Comics</option>
+      <option value="Education">Education</option>
+    </select>
+    <input type="number" id="minPrice" placeholder="Min Price" oninput="renderBooks()" />
+    <input type="number" id="maxPrice" placeholder="Max Price" oninput="renderBooks()" />
+  </div>
+
+  <h3>Book Catalog</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th><th>Author</th><th>Price</th><th>Category</th><th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="bookTable"></tbody>
+  </table>
+
+  <h3>Shopping Cart (<span id="cartCount">0</span>)</h3>
+  <ul id="cartList"></ul>
+
+  <script>
+    let books = JSON.parse(localStorage.getItem('books')) || [];
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+function saveData() {
+  localStorage.setItem('books', JSON.stringify(books));
+  localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+function updateCartDisplay() {
+  const cartList = document.getElementById('cartList');
+  const cartCount = document.getElementById('cartCount');
+  cartList.innerHTML = '';
+  cartCount.textContent = cart.length;
+
+  cart.forEach(book => {
+    const li = document.createElement('li');
+    li.textContent = `${book.title} - ₹${book.price}`;
+    cartList.appendChild(li);
+  });
+}
+
+function addBook() {
+  const title = document.getElementById('title').value.trim();
+  const author = document.getElementById('author').value.trim();
+  const price = parseFloat(document.getElementById('price').value);
+  const category = document.getElementById('category').value;
+
+  if (!title || !author || isNaN(price)) {
+    alert('Please enter valid book details.');
+    return;
+  }
+
+  books.push({ title, author, price, category });
+  saveData();
+  renderBooks();
+}
+
+function addToCart(index) {
+  cart.push(books[index]);
+  saveData();
+  updateCartDisplay();
+}
+
+function renderBooks() {
+  const table = document.getElementById('bookTable');
+  const search = document.getElementById('search').value.toLowerCase();
+  const filterCategory = document.getElementById('filterCategory').value;
+  const minPrice = parseFloat(document.getElementById('minPrice').value);
+  const maxPrice = parseFloat(document.getElementById('maxPrice').value);
+
+  table.innerHTML = '';
+
+  books
+    .filter(book => {
+      const matchesSearch = book.title.toLowerCase().includes(search) || book.author.toLowerCase().includes(search);
+      const matchesCategory = filterCategory === 'all' || book.category === filterCategory;
+      const matchesMin = isNaN(minPrice) || book.price >= minPrice;
+      const matchesMax = isNaN(maxPrice) || book.price <= maxPrice;
+      return matchesSearch && matchesCategory && matchesMin && matchesMax;
+    })
+    .forEach((book, index) => {
+      const row = `<tr>
+        <td>${book.title}</td>
+        <td>${book.author}</td>
+        <td>₹${book.price.toFixed(2)}</td>
+        <td>${book.category}</td>
+        <td><button onclick="addToCart(${index})">🛒 Add to Cart</button></td>
+      </tr>`;
+      table.insertAdjacentHTML('beforeend', row);
+    });
+}
+
+
+renderBooks();
+updateCartDisplay();
+
+  </script>
+</body>
+</html>

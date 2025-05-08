@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Image Slider</title>
+  <style>
+    body { font-family: Arial; text-align: center; padding: 20px; }
+    .slider {
+      position: relative;
+      width: 600px;
+      margin: 0 auto;
+    }
+    .main-image {
+      width: 100%;
+      height: 350px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .thumbnails {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+    }
+    .thumbnail {
+      width: 80px;
+      height: 50px;
+      margin: 0 5px;
+      cursor: pointer;
+      opacity: 0.6;
+      object-fit: cover;
+      border: 2px solid transparent;
+    }
+    .thumbnail.active {
+      opacity: 1;
+      border-color: #333;
+    }
+    .controls {
+      margin-top: 10px;
+    }
+    .controls button {
+      padding: 8px 16px;
+      margin: 0 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Image Slider</h2>
+  <div class="slider">
+    <img id="mainImage" class="main-image" src="" alt="Image Slider">
+    <div class="controls">
+      <button onclick="prevSlide()">⏮️ Prev</button>
+      <button onclick="nextSlide()">⏭️ Next</button>
+    </div>
+    <div id="thumbnails" class="thumbnails"></div>
+  </div>
+
+  <script>
+    const images = [
+  { src: 'img1.jpg', alt: 'Image 1' },
+  { src: 'img2.jpg', alt: 'Image 2' },
+  { src: 'img3.jpg', alt: 'Image 3' },
+  { src: 'img4.jpg', alt: 'Image 4' }
+];
+
+let currentIndex = 0;
+let autoSlideInterval;
+
+const mainImage = document.getElementById('mainImage');
+const thumbnails = document.getElementById('thumbnails');
+
+
+images.forEach((img, index) => {
+  const thumb = document.createElement('img');
+  thumb.src = img.src;
+  thumb.alt = img.alt;
+  thumb.classList.add('thumbnail');
+  thumb.addEventListener('click', () => {
+    currentIndex = index;
+    showSlide();
+  });
+  thumbnails.appendChild(thumb);
+});
+
+function showSlide() {
+  const img = images[currentIndex];
+  mainImage.src = img.src;
+  mainImage.alt = img.alt;
+
+ 
+  document.querySelectorAll('.thumbnail').forEach((thumb, i) => {
+    thumb.classList.toggle('active', i === currentIndex);
+  });
+}
+
+function nextSlide() {
+  currentIndex = (currentIndex + 1) % images.length;
+  showSlide();
+}
+
+function prevSlide() {
+  currentIndex = (currentIndex - 1 + images.length) % images.length;
+  showSlide();
+}
+
+
+function startAutoSlide() {
+  autoSlideInterval = setInterval(nextSlide, 3000);
+}
+
+function stopAutoSlide() {
+  clearInterval(autoSlideInterval);
+}
+
+
+mainImage.addEventListener('mouseenter', stopAutoSlide);
+mainImage.addEventListener('mouseleave', startAutoSlide);
+
+// Initialize
+showSlide();
+startAutoSlide();
+
+  </script>
+</body>
+</html>

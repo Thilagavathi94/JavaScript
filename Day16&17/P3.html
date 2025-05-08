@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Custom Music Player</title>
+  <style>
+    body { font-family: Arial; padding: 20px; text-align: center; }
+    .player { border: 1px solid #ccc; padding: 20px; border-radius: 10px; display: inline-block; width: 300px; }
+    .controls button { margin: 5px; padding: 10px; }
+    #volume { width: 100%; margin-top: 10px; }
+    #trackInfo { margin: 10px 0; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+  <div class="player">
+    <div id="trackInfo">Loading...</div>
+    <audio id="audio" preload="metadata"></audio>
+    
+    <div class="controls">
+      <button onclick="prevTrack()">⏮️ Prev</button>
+      <button onclick="playTrack()">▶️ Play</button>
+      <button onclick="pauseTrack()">⏸️ Pause</button>
+      <button onclick="stopTrack()">⏹️ Stop</button>
+      <button onclick="nextTrack()">⏭️ Next</button>
+    </div>
+
+    <input type="range" id="volume" min="0" max="1" step="0.01" />
+    <div id="duration">00:00</div>
+  </div>
+
+  <script>
+    const audio = document.getElementById('audio');
+const trackInfo = document.getElementById('trackInfo');
+const durationDisplay = document.getElementById('duration');
+const volumeSlider = document.getElementById('volume');
+
+const tracks = [
+  { title: 'Track 1 - Magabharatham', src: 'track1.mp3' },
+  { title: 'Track 2 - Ramayanam', src: 'track2.mp3' },
+  { title: 'Track 3 - Krishna', src: 'track3.mp3' }
+];
+
+let currentTrack = 0;
+
+
+function loadTrack(index) {
+  const track = tracks[index];
+  audio.src = track.src;
+  trackInfo.textContent = track.title;
+  audio.load();
+}
+
+
+function playTrack() {
+  audio.play();
+}
+
+
+function pauseTrack() {
+  audio.pause();
+}
+
+
+function stopTrack() {
+  audio.pause();
+  audio.currentTime = 0;
+}
+
+
+function nextTrack() {
+  currentTrack = (currentTrack + 1) % tracks.length;
+  loadTrack(currentTrack);
+  playTrack();
+}
+
+
+function prevTrack() {
+  currentTrack = (currentTrack - 1 + tracks.length) % tracks.length;
+  loadTrack(currentTrack);
+  playTrack();
+}
+
+
+volumeSlider.addEventListener('input', () => {
+  audio.volume = volumeSlider.value;
+});
+
+
+audio.addEventListener('loadedmetadata', () => {
+  const mins = Math.floor(audio.duration / 60);
+  const secs = Math.floor(audio.duration % 60).toString().padStart(2, '0');
+  durationDisplay.textContent = `${mins}:${secs}`;
+});
+
+volumeSlider.value = 0.5;
+audio.volume = 0.5;
+loadTrack(currentTrack);
+
+  </script>
+</body>
+</html>

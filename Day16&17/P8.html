@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Task Manager</title>
+  <style>
+    body { font-family: Arial; padding: 20px; max-width: 800px; margin: auto; }
+    input, select, button { padding: 8px; margin: 5px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+    .completed { text-decoration: line-through; color: gray; }
+  </style>
+</head>
+<body>
+
+  <h2>Advanced Task Manager</h2>
+
+  <div>
+    <input type="text" id="taskName" placeholder="Task Name" />
+    <select id="category">
+      <option value="Work">Work</option>
+      <option value="Personal">Personal</option>
+      <option value="Study">Study</option>
+    </select>
+    <input type="date" id="dueDate" />
+    <button onclick="addTask()">Add / Update Task</button>
+  </div>
+
+  <div>
+    <select id="filterStatus" onchange="renderTasks()">
+      <option value="all">All</option>
+      <option value="completed">Completed</option>
+      <option value="pending">Pending</option>
+    </select>
+
+    <select id="filterCategory" onchange="renderTasks()">
+      <option value="all">All Categories</option>
+      <option value="Work">Work</option>
+      <option value="Personal">Personal</option>
+      <option value="Study">Study</option>
+    </select>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Task</th>
+        <th>Category</th>
+        <th>Due Date</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="taskTable"></tbody>
+  </table>
+
+  <script>
+    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+let editingIndex = -1;
+
+function saveTasks() {
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
+function clearInputs() {
+  document.getElementById('taskName').value = '';
+  document.getElementById('dueDate').value = '';
+  document.getElementById('category').value = 'Work';
+  editingIndex = -1;
+}
+
+function addTask() {
+  const name = document.getElementById('taskName').value.trim();
+  const category = document.getElementById('category').value;
+  const dueDate = document.getElementById('dueDate').value;
+
+  if (!name || !dueDate) {
+    alert('Please enter task name and due date.');
+    return;
+  }
+
+  const task = {
+    name,
+    category,
+    dueDate,
+    completed: false
+  };
+
+  if (editingIndex >= 0) {
+    tasks[editingIndex] = task;
+  } else {
+    tasks.push(task);
+  }
+
+  saveTasks();
+  clearInputs();
+  renderTasks();
+}
+
+function deleteTask(index) {
+  if (confirm('Delete this task?')) {
+    tasks.splice(index, 1);
+    saveTasks();
+    renderTasks();
+  }
+}
+
+function editTask(index) {
+  const task = tasks[index];
+  document.getElementById('taskName').value = task.name;
+  document.getElementById('category').value = task.category;
+  document.getElementById('dueDate').value = task.dueDate;
+  editingIndex = index;
+}
+
+function toggleComplete(index) {
+  tasks[index].completed = !tasks[index].completed;
+  saveTasks();
+  renderTasks();
+}
+
+function renderTasks() {
+  const tbody = document.getElementById('taskTable');
+  const statusFilter = document.getElementById('filterStatus').value;
+  const categoryFilter = document.getElementById('filterCategory').value;
+
+  
+  const sortedTasks = tasks
+    .slice()
+    .sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+
+  tbody.innerHTML = '';
+  sortedTasks
+    .filter(task => {
+      const statusMatch =
+        statusFilter === 'all' ||
+        (statusFilter === 'completed' && task.completed) ||
+        (statusFilter === 'pending' && !task.completed);
+      const categoryMatch = categoryFilter === 'all' || task.category === categoryFilter;
+      return statusMatch && categoryMatch;
+    })
+    .forEach((task, index) => {
+      const row = `<tr class="${task.completed ? 'completed' : ''}">
+        <td>${task.name}</td>
+        <td>${task.category}</td>
+        <td>${task.dueDate}</td>
+        <td>
+          <button onclick="toggleComplete(${index})">
+            ${task.completed ? '✅ Done' : '🔲 Pending'}
+          </button>
+        </td>
+        <td>
+          <button onclick="editTask(${index})">✏️ Edit</button>
+          <button onclick="deleteTask(${index})">🗑️ Delete</button>
+        </td>
+      </tr>`;
+      tbody.insertAdjacentHTML('beforeend', row);
+    });
+}
+
+
+renderTasks();
+
+  </script>
+</body>
+</html>

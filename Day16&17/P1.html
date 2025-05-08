@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simple Chat App</title>
+  <style>
+    body {
+         font-family: Arial; padding: 20px; 
+        }
+    #chat {
+         border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: scroll; margin-bottom: 10px; 
+        }
+    .message {
+         margin-bottom: 10px; 
+        }
+    .timestamp { 
+        font-size: 0.8em; color: #666; 
+    }
+    #messageInput { 
+        width: 80%; padding: 8px; 
+    }
+    #sendBtn { 
+        padding: 8px 12px; 
+    }
+  </style>
+</head>
+<body>
+  <h2>Chat App</h2>
+  <div id="chat"></div>
+  <input type="text" id="messageInput" placeholder="Type your message..." />
+  <button id="sendBtn">Send</button>
+
+  <script>
+    const chat = document.getElementById('chat');
+const input = document.getElementById('messageInput');
+const sendBtn = document.getElementById('sendBtn');
+
+
+let messages = JSON.parse(localStorage.getItem('messages')) || [];
+
+function displayMessages() {
+  chat.innerHTML = '';
+  messages.forEach(msg => {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'message';
+    messageDiv.innerHTML = `<strong>${msg.sender}</strong>: ${msg.text} <div class="timestamp">${msg.time}</div>`;
+    chat.appendChild(messageDiv);
+  });
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function addMessage(text, sender = 'You') {
+  const time = new Date().toLocaleTimeString();
+  const message = { text, sender, time };
+  messages.push(message);
+  localStorage.setItem('messages', JSON.stringify(messages));
+  displayMessages();
+}
+
+sendBtn.addEventListener('click', () => {
+  const text = input.value.trim();
+  if (text !== '') {
+    addMessage(text);
+    input.value = '';
+    // Simulate receiving a reply after 1 second
+    setTimeout(() => {
+      addMessage('Echo: ' + text, 'Bot');
+    }, 1000);
+  }
+});
+
+
+displayMessages();
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dark Mode Toggle</title>
+  <style>
+    body {
+      font-family: Arial;
+      transition: background 0.3s, color 0.3s;
+      padding: 20px;
+    }
+    .dark-mode {
+      background-color: #121212;
+      color: #f0f0f0;
+    }
+    .light-mode {
+      background-color: #ffffff;
+      color: #000000;
+    }
+    button {
+      padding: 10px 20px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Dark Mode Toggle</h2>
+  <p>This is an example of toggling between light and dark mode.</p>
+  <button id="toggleBtn">Toggle Dark Mode</button>
+
+  <script>
+    const toggleBtn = document.getElementById('toggleBtn');
+const body = document.body;
+
+
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme) {
+  body.classList.add(savedTheme);
+} else {
+  body.classList.add('light-mode'); // default
+}
+
+toggleBtn.addEventListener('click', () => {
+  if (body.classList.contains('dark-mode')) {
+    body.classList.replace('dark-mode', 'light-mode');
+    localStorage.setItem('theme', 'light-mode');
+  } else {
+    body.classList.replace('light-mode', 'dark-mode');
+    localStorage.setItem('theme', 'dark-mode');
+  }
+});
+
+  </script>
+</body>
+</html>
