@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        try {
+ 
+  let result = myVar + 10;  
+} catch (error) {
+  
+  if (error instanceof ReferenceError) {
+    console.error("Caught a ReferenceError:", error.message);
+  } else {
+    console.error("An error occurred:", error.message);
+  }
+}
+
+    </script>
+</body>
+</html>

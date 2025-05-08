@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>API Response Logger</title>
+</head>
+<body>
+  <h2>API Logger Example</h2>
+  <button onclick="fetchUserData()">Fetch User Data</button>
+  <button onclick="viewLogs()">View Logs</button>
+
+  <script>
+    const API_URL = 'https://jsonplaceholder.typicode.com/users/1'; 
+
+  
+    function logToLocalStorage(log) {
+      const logs = JSON.parse(localStorage.getItem('apiLogs')) || [];
+      logs.push({
+        ...log,
+        time: new Date().toISOString()
+      });
+
+     
+      if (logs.length > 50) logs.shift();
+
+      localStorage.setItem('apiLogs', JSON.stringify(logs));
+    }
+
+    async function fetchUserData() {
+      try {
+        const response = await fetch(API_URL);
+
+        if (!response.ok) {
+          throw new Error(`API error: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("Success:", data);
+
+        logToLocalStorage({
+          status: "success",
+          data: data
+        });
+      } catch (error) {
+        console.error("API call failed:", error.message);
+
+        logToLocalStorage({
+          status: "error",
+          message: error.message
+        });
+      }
+    }
+
+  
+    function viewLogs() {
+      const logs = JSON.parse(localStorage.getItem('apiLogs')) || [];
+      console.table(logs);
+    }
+  </script>
+</body>
+</html>

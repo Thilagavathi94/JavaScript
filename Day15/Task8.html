@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function processUserData(user) {
+  try {
+    
+    if (!user) {
+      throw new Error("User data is missing.");
+    }
+
+    
+    if (!user.name) {
+      console.warn("User name is missing. Defaulting to 'Guest'.");
+      user.name = "Guest";
+    }
+
+    if (!user.age) {
+      console.warn("User age is not provided.");
+    }
+
+  
+    if (user.age < 0) {
+      throw new Error("User age cannot be negative.");
+    }
+
+    
+    console.log("User data is valid:", user);
+    
+  } catch (error) {
+   
+    console.error("Error processing user data:", error.message);
+  }
+}
+
+// Test Cases
+processUserData(null);                        
+processUserData({ name: "", age: -5 });       
+processUserData({ name: "Alice" });            
+processUserData({ name: "Bob", age: 30 });     
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+      
+function logErrorToLocalStorage(error) {
+    const logs = JSON.parse(localStorage.getItem('errorLogs')) || [];
+
+    const logEntry = {
+        message: error.message,
+        stack: error.stack,
+        time: new Date().toISOString()
+    };
+
+    logs.push(logEntry);
+
+   
+    if (logs.length > 50) {
+        logs.shift();
+    }
+
+    localStorage.setItem('errorLogs', JSON.stringify(logs));
+}
+
+
+window.onerror = function(message, source, lineno, colno, error) {
+    logErrorToLocalStorage(error || new Error(message));
+};
+
+function causeError() {
+    throw new Error("This is a test error for logging");
+}
+
+
+causeError();
+
+
+function displayErrorLogs() {
+    const logs = JSON.parse(localStorage.getItem('errorLogs')) || [];
+    console.table(logs);
+}
+
+    </script>
+</body>
+</html>

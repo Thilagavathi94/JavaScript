@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function processData(input) {
+  try {
+  
+    try {
+      if (typeof input !== 'number') {
+        throw new TypeError("Input must be a number!");
+      }
+      console.log("Number is valid:", input);
+    } catch (error) {
+     
+      console.error("TypeError:", error.message);
+      throw error; 
+    }
+    
+   
+    try {
+      if (input === 0) {
+        throw new Error("Cannot divide by zero!");
+      }
+      let result = 10 / input;
+      console.log("Result of division:", result);
+    } catch (error) {
+     
+      console.error("Division Error:", error.message);
+      throw error; 
+    }
+    
+  } catch (error) {
+    
+    console.error("General Error: ", error.message);
+  }
+}
+
+
+
+    </script>
+</body>
+</html>

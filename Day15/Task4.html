@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function validateAge(age) {
+  try {
+   
+    if (isNaN(age)) {
+      throw new Error("Age must be a number!");
+    }
+    if (age < 0 || age > 120) {
+      throw new Error("Age must be between 0 and 120!");
+    }
+    
+  
+    console.log("Age is valid:", age);
+  } catch (error) {
+   
+    console.error("Error:", error.message);
+  }
+}
+
+
+validateAge("twenty");  
+validateAge(150);       
+validateAge(25);        
+
+    </script>
+</body>
+</html>

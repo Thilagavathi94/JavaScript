@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Registration</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .error {
+      color: red;
+      font-size: 0.9em;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+    }
+
+    button {
+      padding: 10px 15px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+  <h2>User Registration</h2>
+  <form id="registrationForm" novalidate>
+    <div class="form-group">
+      <label>Name:</label>
+      <input type="text" id="name" />
+      <div class="error" id="nameError"></div>
+    </div>
+    <div class="form-group">
+      <label>Email:</label>
+      <input type="email" id="email" />
+      <div class="error" id="emailError"></div>
+    </div>
+    <div class="form-group">
+      <label>Password:</label>
+      <input type="password" id="password" />
+      <div class="error" id="passwordError"></div>
+    </div>
+    <button type="submit">Register</button>
+  </form>
+
+  <script>
+    const form = document.getElementById('registrationForm');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+
+      document.getElementById('nameError').textContent = '';
+      document.getElementById('emailError').textContent = '';
+      document.getElementById('passwordError').textContent = '';
+
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      try {
+        if (!name) {
+          throw { field: 'name', message: 'Name is required' };
+        }
+
+        if (!email) {
+          throw { field: 'email', message: 'Email is required' };
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          throw { field: 'email', message: 'Invalid email format' };
+        }
+
+        if (!password) {
+          throw { field: 'password', message: 'Password is required' };
+        }
+
+       
+        alert('Registration successful!');
+        form.reset();
+      } catch (error) {
+        if (error.field && error.message) {
+          document.getElementById(`${error.field}Error`).textContent = error.message;
+        } else {
+          console.error('Unknown error:', error);
+        }
+      }
+    });
+  </script>
+</body>
+</html>
